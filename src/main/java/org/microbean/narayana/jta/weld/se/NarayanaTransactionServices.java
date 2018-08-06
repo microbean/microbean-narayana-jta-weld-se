@@ -26,17 +26,90 @@ import javax.transaction.UserTransaction;
 
 import org.jboss.weld.transaction.spi.TransactionServices;
 
+/**
+ * A {@link TransactionServices} implementation that uses the <a
+ * href="https://narayana.io/">Narayana transaction engine</a> and
+ * does not use JNDI.
+ *
+ * @author <a href="https://about.me/lairdnelson"
+ * target="_parent">Laird Nelson</a>
+ *
+ * @see TransactionServices
+ */
 public class NarayanaTransactionServices implements TransactionServices {
 
+
+  /*
+   * Constructors.
+   */
+
+
+  /**
+   * Creates a new {@link NarayanaTransactionServices}.
+   */
   public NarayanaTransactionServices() {
     super();
   }
 
+
+  /*
+   * Instance methods.
+   */
+  
+
+  /**
+   * Returns the {@link UserTransaction} present in this environment.
+   *
+   * <p>This method never returns {@code null}.</p>
+   *
+   * @return the non-{@code null} {@link UserTransaction} present in
+   * this environment
+   *
+   * @see com.arjuna.ats.jta.UserTransaction#userTransaction()
+   */
   @Override
   public final UserTransaction getUserTransaction() {
     return com.arjuna.ats.jta.UserTransaction.userTransaction();
   }
 
+  /**
+   * Returns {@code true} if the {@linkplain #getUserTransaction()
+   * current <code>UserTransaction</code>} {@linkplain
+   * UserTransaction#getStatus() has a status} indicating that it is
+   * active.
+   *
+   * <p>This method returns {@code true} if the {@linkplain
+   * #getUserTransaction() current <code>UserTransaction</code>}
+   * {@linkplain UserTransaction#getStatus() has a status} equal to
+   * one of the following values:</p>
+   *
+   * <ul>
+   *
+   * <li>{@link Status#STATUS_ACTIVE}</li>
+   *
+   * <li>{@link Status#STATUS_COMMITTING}</li>
+   *
+   * <li>{@link Status#STATUS_MARKED_ROLLBACK}</li>
+   *
+   * <li>{@link Status#STATUS_PREPARED}</li>
+   *
+   * <li>{@link Status#STATUS_PREPARING}</li>
+   *
+   * <li>{@link Status#STATUS_ROLLING_BACK}</li>
+   *
+   * </ul>
+   *
+   * @return {@code true} if the {@linkplain #getUserTransaction()
+   * current <code>UserTransaction</code>} {@linkplain
+   * UserTransaction#getStatus() has a status} indicating that it is
+   * active; {@code false} otherwise
+   *
+   * @exception RuntimeException if an invocation of the {@link
+   * UserTransaction#getStatus()} method resulted in a {@link
+   * SystemException}
+   *
+   * @see Status
+   */
   @Override
   public final boolean isTransactionActive() {
     final UserTransaction userTransaction = this.getUserTransaction();
@@ -63,9 +136,25 @@ public class NarayanaTransactionServices implements TransactionServices {
     return returnValue;
   }
 
+  /**
+   * Registers the supplied {@link Synchronization} with the
+   * {@linkplain TransactionManager#getTransaction() current
+   * <code>Transaction</code>}.
+   *
+   * @exception RuntimeException if an invocation of the {@link
+   * TransactionManager#getTransaction()} method resulted in a {@link
+   * SystemException}, or if an invocation of the {@link
+   * Transaction#registerSynchronization(Synchronization)} method
+   * resulted in either a {@link SystemException} or a {@link
+   * RollbackException}
+   *
+   * @see com.arjuna.ats.jta.TransactionManager#transactionManager()
+   *
+   * @see Transaction#registerSynchronization(Synchronization)
+   */
   @Override
   public final void registerSynchronization(final Synchronization synchronization) {
-    TransactionManager transactionManager = com.arjuna.ats.jta.TransactionManager.transactionManager();
+    final TransactionManager transactionManager = com.arjuna.ats.jta.TransactionManager.transactionManager();
     if (transactionManager != null) {
       Transaction transaction = null;
       try {
@@ -83,6 +172,9 @@ public class NarayanaTransactionServices implements TransactionServices {
     }
   }
 
+  /**
+   * Does nothing when invoked.
+   */
   @Override
   public final void cleanup() {
 

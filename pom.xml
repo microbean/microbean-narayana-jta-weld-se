@@ -252,7 +252,7 @@
 
     <!-- maven-javadoc-plugin properties; see https://maven.apache.org/plugins/maven-javadoc-plugin/javadoc-mojo.html -->
     <doctitle>&lt;a href="${project.url}" target="_parent"&gt;&lt;span style="font-family:Lobster, cursive;"&gt;µb&lt;/span&gt; ${project.artifactId}&lt;/a&gt; ${project.version} &lt;a href="https://travis-ci.org/microbean/${project.artifactId}" target="_parent"&gt;&lt;img src="https://travis-ci.org/microbean/${project.artifactId}.svg?branch=master"&gt;&lt;/a&gt;</doctitle>
-    <links>https://docs.jboss.org/weld/javadoc/3.0/weld-spi/,https://static.javadoc.io/javax.transaction/javax.transaction-api/1.2/</links>
+    <links>https://docs.jboss.org/weld/javadoc/3.0/weld-spi/,https://static.javadoc.io/javax.transaction/javax.transaction-api/1.2/,https://static.javadoc.io/org.jboss.narayana.jta/narayana-jta/5.9.0.Final/</links>
     <stylesheetfile>css/stylesheet.css</stylesheetfile>
 
     <!-- maven-project-info-reports-plugin properties; see https://maven.apache.org/plugins/maven-project-info-reports-plugin/ -->
