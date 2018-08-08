@@ -16,6 +16,10 @@
  */
 package org.microbean.narayana.jta.weld.se;
 
+import javax.enterprise.inject.Instance;
+
+import javax.enterprise.inject.spi.CDI;
+
 import javax.transaction.RollbackException;
 import javax.transaction.Status;
 import javax.transaction.Synchronization;
@@ -31,6 +35,15 @@ import org.jboss.weld.transaction.spi.TransactionServices;
  * href="https://narayana.io/">Narayana transaction engine</a> and
  * does not use JNDI.
  *
+ * <p>{@link TransactionServices} implementations are used by <a
+ * href="https://docs.jboss.org/weld/reference/latest/en-US/html/index.html">Weld</a>
+ * for <a
+ * href="http://docs.jboss.org/cdi/spec/2.0/cdi-spec.html#transactional_observer_methods">transactional
+ * observer notification</a> as well as for providing the
+ * implementation backing the <a
+ * href="http://docs.jboss.org/cdi/spec/2.0/cdi-spec.html#additional_builtin_beans">built-in
+ * {@code UserTransaction} CDI bean</a>.</p>
+ *
  * @author <a href="https://about.me/lairdnelson"
  * target="_parent">Laird Nelson</a>
  *
@@ -38,6 +51,7 @@ import org.jboss.weld.transaction.spi.TransactionServices;
  */
 public class NarayanaTransactionServices implements TransactionServices {
 
+  private UserTransaction userTransaction;
 
   /*
    * Constructors.
@@ -58,9 +72,17 @@ public class NarayanaTransactionServices implements TransactionServices {
   
 
   /**
-   * Returns the {@link UserTransaction} present in this environment.
+   * Returns the {@link UserTransaction} present in this environment
+   * by invoking the {@link
+   * com.arjuna.ats.jta.UserTransaction#userTransaction()} method and
+   * returning its result.
    *
    * <p>This method never returns {@code null}.</p>
+   *
+   * <p>The return value of this method is used as the backing
+   * implementation of the <a
+   * href="http://docs.jboss.org/cdi/spec/2.0/cdi-spec.html#additional_builtin_beans">built-in
+   * {@code UserTransaction} CDI bean</a>.</p>
    *
    * @return the non-{@code null} {@link UserTransaction} present in
    * this environment
@@ -73,15 +95,13 @@ public class NarayanaTransactionServices implements TransactionServices {
   }
 
   /**
-   * Returns {@code true} if the {@linkplain #getUserTransaction()
-   * current <code>UserTransaction</code>} {@linkplain
-   * UserTransaction#getStatus() has a status} indicating that it is
-   * active.
+   * Returns {@code true} if the current {@link UserTransaction}
+   * {@linkplain UserTransaction#getStatus() has a status} indicating
+   * that it is active.
    *
-   * <p>This method returns {@code true} if the {@linkplain
-   * #getUserTransaction() current <code>UserTransaction</code>}
-   * {@linkplain UserTransaction#getStatus() has a status} equal to
-   * one of the following values:</p>
+   * <p>This method returns {@code true} if the current {@link
+   * UserTransaction} {@linkplain UserTransaction#getStatus() has a
+   * status} equal to one of the following values:</p>
    *
    * <ul>
    *
@@ -99,10 +119,9 @@ public class NarayanaTransactionServices implements TransactionServices {
    *
    * </ul>
    *
-   * @return {@code true} if the {@linkplain #getUserTransaction()
-   * current <code>UserTransaction</code>} {@linkplain
-   * UserTransaction#getStatus() has a status} indicating that it is
-   * active; {@code false} otherwise
+   * @return {@code true} if the current {@link UserTransaction}
+   * {@linkplain UserTransaction#getStatus() has a status} indicating
+   * that it is active; {@code false} otherwise
    *
    * @exception RuntimeException if an invocation of the {@link
    * UserTransaction#getStatus()} method resulted in a {@link
@@ -112,7 +131,13 @@ public class NarayanaTransactionServices implements TransactionServices {
    */
   @Override
   public final boolean isTransactionActive() {
-    final UserTransaction userTransaction = this.getUserTransaction();
+    final UserTransaction userTransaction;
+    synchronized (this) {
+      if (this.userTransaction == null) {
+        this.userTransaction = CDI.current().select(UserTransaction.class).get();
+      }
+      userTransaction = this.userTransaction;
+    }
     final boolean returnValue;
     if (userTransaction == null) {
       returnValue = false;
@@ -137,9 +162,8 @@ public class NarayanaTransactionServices implements TransactionServices {
   }
 
   /**
-   * Registers the supplied {@link Synchronization} with the
-   * {@linkplain TransactionManager#getTransaction() current
-   * <code>Transaction</code>}.
+   * Registers the supplied {@link Synchronization} with the current
+   * {@link Transaction}.
    *
    * @exception RuntimeException if an invocation of the {@link
    * TransactionManager#getTransaction()} method resulted in a {@link
@@ -148,36 +172,48 @@ public class NarayanaTransactionServices implements TransactionServices {
    * resulted in either a {@link SystemException} or a {@link
    * RollbackException}
    *
-   * @see com.arjuna.ats.jta.TransactionManager#transactionManager()
-   *
    * @see Transaction#registerSynchronization(Synchronization)
    */
   @Override
   public final void registerSynchronization(final Synchronization synchronization) {
-    final TransactionManager transactionManager = com.arjuna.ats.jta.TransactionManager.transactionManager();
-    if (transactionManager != null) {
-      Transaction transaction = null;
-      try {
-        transaction = transactionManager.getTransaction();
-      } catch (final SystemException e) {
-        throw new RuntimeException(e.getMessage(), e);
+    final CDI<Object> cdi = CDI.current();    
+    final Instance<Transaction> transactionInstance = cdi.select(Transaction.class);
+    Transaction transaction = null;
+    if (transactionInstance.isUnsatisfied()) {
+      Instance<TransactionManager> transactionManagerInstance = cdi.select(TransactionManager.class);
+      assert transactionManagerInstance != null;
+      final TransactionManager transactionManager;
+      if (transactionManagerInstance.isUnsatisfied()) {
+        transactionManager = com.arjuna.ats.jta.TransactionManager.transactionManager();
+      } else {
+        transactionManager = transactionManagerInstance.get();
       }
-      if (transaction != null) {
+      if (transactionManager != null) {
         try {
-          transaction.registerSynchronization(synchronization);
-        } catch (final SystemException | RollbackException e) {
+          transaction = transactionManager.getTransaction();
+        } catch (final SystemException e) {
           throw new RuntimeException(e.getMessage(), e);
         }
+      }
+    } else {
+      transaction = transactionInstance.get();
+    }
+    if (transaction != null) {
+      try {
+        transaction.registerSynchronization(synchronization);
+      } catch (final SystemException | RollbackException e) {
+        throw new RuntimeException(e.getMessage(), e);
       }
     }
   }
 
   /**
-   * Does nothing when invoked.
+   * Releases any internal resources acquired during the lifespan of
+   * this object.
    */
   @Override
-  public final void cleanup() {
-
+  public synchronized final void cleanup() {
+    this.userTransaction = null;
   }
 
   
