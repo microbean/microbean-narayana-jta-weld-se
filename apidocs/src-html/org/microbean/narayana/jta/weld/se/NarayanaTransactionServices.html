@@ -24,172 +24,208 @@
 <span class="sourceLineNo">016</span> */<a name="line.16"></a>
 <span class="sourceLineNo">017</span>package org.microbean.narayana.jta.weld.se;<a name="line.17"></a>
 <span class="sourceLineNo">018</span><a name="line.18"></a>
-<span class="sourceLineNo">019</span>import javax.transaction.RollbackException;<a name="line.19"></a>
-<span class="sourceLineNo">020</span>import javax.transaction.Status;<a name="line.20"></a>
-<span class="sourceLineNo">021</span>import javax.transaction.Synchronization;<a name="line.21"></a>
-<span class="sourceLineNo">022</span>import javax.transaction.SystemException;<a name="line.22"></a>
-<span class="sourceLineNo">023</span>import javax.transaction.Transaction;<a name="line.23"></a>
-<span class="sourceLineNo">024</span>import javax.transaction.TransactionManager;<a name="line.24"></a>
-<span class="sourceLineNo">025</span>import javax.transaction.UserTransaction;<a name="line.25"></a>
-<span class="sourceLineNo">026</span><a name="line.26"></a>
-<span class="sourceLineNo">027</span>import org.jboss.weld.transaction.spi.TransactionServices;<a name="line.27"></a>
-<span class="sourceLineNo">028</span><a name="line.28"></a>
-<span class="sourceLineNo">029</span>/**<a name="line.29"></a>
-<span class="sourceLineNo">030</span> * A {@link TransactionServices} implementation that uses the &lt;a<a name="line.30"></a>
-<span class="sourceLineNo">031</span> * href="https://narayana.io/"&gt;Narayana transaction engine&lt;/a&gt; and<a name="line.31"></a>
-<span class="sourceLineNo">032</span> * does not use JNDI.<a name="line.32"></a>
-<span class="sourceLineNo">033</span> *<a name="line.33"></a>
-<span class="sourceLineNo">034</span> * @author &lt;a href="https://about.me/lairdnelson"<a name="line.34"></a>
-<span class="sourceLineNo">035</span> * target="_parent"&gt;Laird Nelson&lt;/a&gt;<a name="line.35"></a>
-<span class="sourceLineNo">036</span> *<a name="line.36"></a>
-<span class="sourceLineNo">037</span> * @see TransactionServices<a name="line.37"></a>
-<span class="sourceLineNo">038</span> */<a name="line.38"></a>
-<span class="sourceLineNo">039</span>public class NarayanaTransactionServices implements TransactionServices {<a name="line.39"></a>
-<span class="sourceLineNo">040</span><a name="line.40"></a>
-<span class="sourceLineNo">041</span><a name="line.41"></a>
-<span class="sourceLineNo">042</span>  /*<a name="line.42"></a>
-<span class="sourceLineNo">043</span>   * Constructors.<a name="line.43"></a>
-<span class="sourceLineNo">044</span>   */<a name="line.44"></a>
-<span class="sourceLineNo">045</span><a name="line.45"></a>
-<span class="sourceLineNo">046</span><a name="line.46"></a>
-<span class="sourceLineNo">047</span>  /**<a name="line.47"></a>
-<span class="sourceLineNo">048</span>   * Creates a new {@link NarayanaTransactionServices}.<a name="line.48"></a>
-<span class="sourceLineNo">049</span>   */<a name="line.49"></a>
-<span class="sourceLineNo">050</span>  public NarayanaTransactionServices() {<a name="line.50"></a>
-<span class="sourceLineNo">051</span>    super();<a name="line.51"></a>
-<span class="sourceLineNo">052</span>  }<a name="line.52"></a>
+<span class="sourceLineNo">019</span>import javax.enterprise.inject.Instance;<a name="line.19"></a>
+<span class="sourceLineNo">020</span><a name="line.20"></a>
+<span class="sourceLineNo">021</span>import javax.enterprise.inject.spi.CDI;<a name="line.21"></a>
+<span class="sourceLineNo">022</span><a name="line.22"></a>
+<span class="sourceLineNo">023</span>import javax.transaction.RollbackException;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import javax.transaction.Status;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import javax.transaction.Synchronization;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import javax.transaction.SystemException;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import javax.transaction.Transaction;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import javax.transaction.TransactionManager;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import javax.transaction.UserTransaction;<a name="line.29"></a>
+<span class="sourceLineNo">030</span><a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.jboss.weld.transaction.spi.TransactionServices;<a name="line.31"></a>
+<span class="sourceLineNo">032</span><a name="line.32"></a>
+<span class="sourceLineNo">033</span>/**<a name="line.33"></a>
+<span class="sourceLineNo">034</span> * A {@link TransactionServices} implementation that uses the &lt;a<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * href="https://narayana.io/"&gt;Narayana transaction engine&lt;/a&gt; and<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * does not use JNDI.<a name="line.36"></a>
+<span class="sourceLineNo">037</span> *<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * &lt;p&gt;{@link TransactionServices} implementations are used by &lt;a<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * href="https://docs.jboss.org/weld/reference/latest/en-US/html/index.html"&gt;Weld&lt;/a&gt;<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * for &lt;a<a name="line.40"></a>
+<span class="sourceLineNo">041</span> * href="http://docs.jboss.org/cdi/spec/2.0/cdi-spec.html#transactional_observer_methods"&gt;transactional<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * observer notification&lt;/a&gt; as well as for providing the<a name="line.42"></a>
+<span class="sourceLineNo">043</span> * implementation backing the &lt;a<a name="line.43"></a>
+<span class="sourceLineNo">044</span> * href="http://docs.jboss.org/cdi/spec/2.0/cdi-spec.html#additional_builtin_beans"&gt;built-in<a name="line.44"></a>
+<span class="sourceLineNo">045</span> * {@code UserTransaction} CDI bean&lt;/a&gt;.&lt;/p&gt;<a name="line.45"></a>
+<span class="sourceLineNo">046</span> *<a name="line.46"></a>
+<span class="sourceLineNo">047</span> * @author &lt;a href="https://about.me/lairdnelson"<a name="line.47"></a>
+<span class="sourceLineNo">048</span> * target="_parent"&gt;Laird Nelson&lt;/a&gt;<a name="line.48"></a>
+<span class="sourceLineNo">049</span> *<a name="line.49"></a>
+<span class="sourceLineNo">050</span> * @see TransactionServices<a name="line.50"></a>
+<span class="sourceLineNo">051</span> */<a name="line.51"></a>
+<span class="sourceLineNo">052</span>public class NarayanaTransactionServices implements TransactionServices {<a name="line.52"></a>
 <span class="sourceLineNo">053</span><a name="line.53"></a>
-<span class="sourceLineNo">054</span><a name="line.54"></a>
-<span class="sourceLineNo">055</span>  /*<a name="line.55"></a>
-<span class="sourceLineNo">056</span>   * Instance methods.<a name="line.56"></a>
-<span class="sourceLineNo">057</span>   */<a name="line.57"></a>
-<span class="sourceLineNo">058</span>  <a name="line.58"></a>
+<span class="sourceLineNo">054</span>  private UserTransaction userTransaction;<a name="line.54"></a>
+<span class="sourceLineNo">055</span><a name="line.55"></a>
+<span class="sourceLineNo">056</span>  /*<a name="line.56"></a>
+<span class="sourceLineNo">057</span>   * Constructors.<a name="line.57"></a>
+<span class="sourceLineNo">058</span>   */<a name="line.58"></a>
 <span class="sourceLineNo">059</span><a name="line.59"></a>
-<span class="sourceLineNo">060</span>  /**<a name="line.60"></a>
-<span class="sourceLineNo">061</span>   * Returns the {@link UserTransaction} present in this environment.<a name="line.61"></a>
-<span class="sourceLineNo">062</span>   *<a name="line.62"></a>
-<span class="sourceLineNo">063</span>   * &lt;p&gt;This method never returns {@code null}.&lt;/p&gt;<a name="line.63"></a>
-<span class="sourceLineNo">064</span>   *<a name="line.64"></a>
-<span class="sourceLineNo">065</span>   * @return the non-{@code null} {@link UserTransaction} present in<a name="line.65"></a>
-<span class="sourceLineNo">066</span>   * this environment<a name="line.66"></a>
-<span class="sourceLineNo">067</span>   *<a name="line.67"></a>
-<span class="sourceLineNo">068</span>   * @see com.arjuna.ats.jta.UserTransaction#userTransaction()<a name="line.68"></a>
-<span class="sourceLineNo">069</span>   */<a name="line.69"></a>
-<span class="sourceLineNo">070</span>  @Override<a name="line.70"></a>
-<span class="sourceLineNo">071</span>  public final UserTransaction getUserTransaction() {<a name="line.71"></a>
-<span class="sourceLineNo">072</span>    return com.arjuna.ats.jta.UserTransaction.userTransaction();<a name="line.72"></a>
-<span class="sourceLineNo">073</span>  }<a name="line.73"></a>
-<span class="sourceLineNo">074</span><a name="line.74"></a>
-<span class="sourceLineNo">075</span>  /**<a name="line.75"></a>
-<span class="sourceLineNo">076</span>   * Returns {@code true} if the {@linkplain #getUserTransaction()<a name="line.76"></a>
-<span class="sourceLineNo">077</span>   * current &lt;code&gt;UserTransaction&lt;/code&gt;} {@linkplain<a name="line.77"></a>
-<span class="sourceLineNo">078</span>   * UserTransaction#getStatus() has a status} indicating that it is<a name="line.78"></a>
-<span class="sourceLineNo">079</span>   * active.<a name="line.79"></a>
-<span class="sourceLineNo">080</span>   *<a name="line.80"></a>
-<span class="sourceLineNo">081</span>   * &lt;p&gt;This method returns {@code true} if the {@linkplain<a name="line.81"></a>
-<span class="sourceLineNo">082</span>   * #getUserTransaction() current &lt;code&gt;UserTransaction&lt;/code&gt;}<a name="line.82"></a>
-<span class="sourceLineNo">083</span>   * {@linkplain UserTransaction#getStatus() has a status} equal to<a name="line.83"></a>
-<span class="sourceLineNo">084</span>   * one of the following values:&lt;/p&gt;<a name="line.84"></a>
-<span class="sourceLineNo">085</span>   *<a name="line.85"></a>
-<span class="sourceLineNo">086</span>   * &lt;ul&gt;<a name="line.86"></a>
-<span class="sourceLineNo">087</span>   *<a name="line.87"></a>
-<span class="sourceLineNo">088</span>   * &lt;li&gt;{@link Status#STATUS_ACTIVE}&lt;/li&gt;<a name="line.88"></a>
+<span class="sourceLineNo">060</span><a name="line.60"></a>
+<span class="sourceLineNo">061</span>  /**<a name="line.61"></a>
+<span class="sourceLineNo">062</span>   * Creates a new {@link NarayanaTransactionServices}.<a name="line.62"></a>
+<span class="sourceLineNo">063</span>   */<a name="line.63"></a>
+<span class="sourceLineNo">064</span>  public NarayanaTransactionServices() {<a name="line.64"></a>
+<span class="sourceLineNo">065</span>    super();<a name="line.65"></a>
+<span class="sourceLineNo">066</span>  }<a name="line.66"></a>
+<span class="sourceLineNo">067</span><a name="line.67"></a>
+<span class="sourceLineNo">068</span><a name="line.68"></a>
+<span class="sourceLineNo">069</span>  /*<a name="line.69"></a>
+<span class="sourceLineNo">070</span>   * Instance methods.<a name="line.70"></a>
+<span class="sourceLineNo">071</span>   */<a name="line.71"></a>
+<span class="sourceLineNo">072</span>  <a name="line.72"></a>
+<span class="sourceLineNo">073</span><a name="line.73"></a>
+<span class="sourceLineNo">074</span>  /**<a name="line.74"></a>
+<span class="sourceLineNo">075</span>   * Returns the {@link UserTransaction} present in this environment<a name="line.75"></a>
+<span class="sourceLineNo">076</span>   * by invoking the {@link<a name="line.76"></a>
+<span class="sourceLineNo">077</span>   * com.arjuna.ats.jta.UserTransaction#userTransaction()} method and<a name="line.77"></a>
+<span class="sourceLineNo">078</span>   * returning its result.<a name="line.78"></a>
+<span class="sourceLineNo">079</span>   *<a name="line.79"></a>
+<span class="sourceLineNo">080</span>   * &lt;p&gt;This method never returns {@code null}.&lt;/p&gt;<a name="line.80"></a>
+<span class="sourceLineNo">081</span>   *<a name="line.81"></a>
+<span class="sourceLineNo">082</span>   * &lt;p&gt;The return value of this method is used as the backing<a name="line.82"></a>
+<span class="sourceLineNo">083</span>   * implementation of the &lt;a<a name="line.83"></a>
+<span class="sourceLineNo">084</span>   * href="http://docs.jboss.org/cdi/spec/2.0/cdi-spec.html#additional_builtin_beans"&gt;built-in<a name="line.84"></a>
+<span class="sourceLineNo">085</span>   * {@code UserTransaction} CDI bean&lt;/a&gt;.&lt;/p&gt;<a name="line.85"></a>
+<span class="sourceLineNo">086</span>   *<a name="line.86"></a>
+<span class="sourceLineNo">087</span>   * @return the non-{@code null} {@link UserTransaction} present in<a name="line.87"></a>
+<span class="sourceLineNo">088</span>   * this environment<a name="line.88"></a>
 <span class="sourceLineNo">089</span>   *<a name="line.89"></a>
-<span class="sourceLineNo">090</span>   * &lt;li&gt;{@link Status#STATUS_COMMITTING}&lt;/li&gt;<a name="line.90"></a>
-<span class="sourceLineNo">091</span>   *<a name="line.91"></a>
-<span class="sourceLineNo">092</span>   * &lt;li&gt;{@link Status#STATUS_MARKED_ROLLBACK}&lt;/li&gt;<a name="line.92"></a>
-<span class="sourceLineNo">093</span>   *<a name="line.93"></a>
-<span class="sourceLineNo">094</span>   * &lt;li&gt;{@link Status#STATUS_PREPARED}&lt;/li&gt;<a name="line.94"></a>
-<span class="sourceLineNo">095</span>   *<a name="line.95"></a>
-<span class="sourceLineNo">096</span>   * &lt;li&gt;{@link Status#STATUS_PREPARING}&lt;/li&gt;<a name="line.96"></a>
-<span class="sourceLineNo">097</span>   *<a name="line.97"></a>
-<span class="sourceLineNo">098</span>   * &lt;li&gt;{@link Status#STATUS_ROLLING_BACK}&lt;/li&gt;<a name="line.98"></a>
-<span class="sourceLineNo">099</span>   *<a name="line.99"></a>
-<span class="sourceLineNo">100</span>   * &lt;/ul&gt;<a name="line.100"></a>
+<span class="sourceLineNo">090</span>   * @see com.arjuna.ats.jta.UserTransaction#userTransaction()<a name="line.90"></a>
+<span class="sourceLineNo">091</span>   */<a name="line.91"></a>
+<span class="sourceLineNo">092</span>  @Override<a name="line.92"></a>
+<span class="sourceLineNo">093</span>  public final UserTransaction getUserTransaction() {<a name="line.93"></a>
+<span class="sourceLineNo">094</span>    return com.arjuna.ats.jta.UserTransaction.userTransaction();<a name="line.94"></a>
+<span class="sourceLineNo">095</span>  }<a name="line.95"></a>
+<span class="sourceLineNo">096</span><a name="line.96"></a>
+<span class="sourceLineNo">097</span>  /**<a name="line.97"></a>
+<span class="sourceLineNo">098</span>   * Returns {@code true} if the current {@link UserTransaction}<a name="line.98"></a>
+<span class="sourceLineNo">099</span>   * {@linkplain UserTransaction#getStatus() has a status} indicating<a name="line.99"></a>
+<span class="sourceLineNo">100</span>   * that it is active.<a name="line.100"></a>
 <span class="sourceLineNo">101</span>   *<a name="line.101"></a>
-<span class="sourceLineNo">102</span>   * @return {@code true} if the {@linkplain #getUserTransaction()<a name="line.102"></a>
-<span class="sourceLineNo">103</span>   * current &lt;code&gt;UserTransaction&lt;/code&gt;} {@linkplain<a name="line.103"></a>
-<span class="sourceLineNo">104</span>   * UserTransaction#getStatus() has a status} indicating that it is<a name="line.104"></a>
-<span class="sourceLineNo">105</span>   * active; {@code false} otherwise<a name="line.105"></a>
-<span class="sourceLineNo">106</span>   *<a name="line.106"></a>
-<span class="sourceLineNo">107</span>   * @exception RuntimeException if an invocation of the {@link<a name="line.107"></a>
-<span class="sourceLineNo">108</span>   * UserTransaction#getStatus()} method resulted in a {@link<a name="line.108"></a>
-<span class="sourceLineNo">109</span>   * SystemException}<a name="line.109"></a>
-<span class="sourceLineNo">110</span>   *<a name="line.110"></a>
-<span class="sourceLineNo">111</span>   * @see Status<a name="line.111"></a>
-<span class="sourceLineNo">112</span>   */<a name="line.112"></a>
-<span class="sourceLineNo">113</span>  @Override<a name="line.113"></a>
-<span class="sourceLineNo">114</span>  public final boolean isTransactionActive() {<a name="line.114"></a>
-<span class="sourceLineNo">115</span>    final UserTransaction userTransaction = this.getUserTransaction();<a name="line.115"></a>
-<span class="sourceLineNo">116</span>    final boolean returnValue;<a name="line.116"></a>
-<span class="sourceLineNo">117</span>    if (userTransaction == null) {<a name="line.117"></a>
-<span class="sourceLineNo">118</span>      returnValue = false;<a name="line.118"></a>
-<span class="sourceLineNo">119</span>    } else {<a name="line.119"></a>
-<span class="sourceLineNo">120</span>      boolean temp = false;<a name="line.120"></a>
-<span class="sourceLineNo">121</span>      try {<a name="line.121"></a>
-<span class="sourceLineNo">122</span>        final int status = userTransaction.getStatus();<a name="line.122"></a>
-<span class="sourceLineNo">123</span>        temp =<a name="line.123"></a>
-<span class="sourceLineNo">124</span>          status == Status.STATUS_ACTIVE ||<a name="line.124"></a>
-<span class="sourceLineNo">125</span>          status == Status.STATUS_COMMITTING ||<a name="line.125"></a>
-<span class="sourceLineNo">126</span>          status == Status.STATUS_MARKED_ROLLBACK ||<a name="line.126"></a>
-<span class="sourceLineNo">127</span>          status == Status.STATUS_PREPARED ||<a name="line.127"></a>
-<span class="sourceLineNo">128</span>          status == Status.STATUS_PREPARING ||<a name="line.128"></a>
-<span class="sourceLineNo">129</span>          status == Status.STATUS_ROLLING_BACK;<a name="line.129"></a>
-<span class="sourceLineNo">130</span>      } catch (final SystemException e) {<a name="line.130"></a>
-<span class="sourceLineNo">131</span>        throw new RuntimeException(e.getMessage(), e);<a name="line.131"></a>
-<span class="sourceLineNo">132</span>      } finally {<a name="line.132"></a>
-<span class="sourceLineNo">133</span>        returnValue = temp;<a name="line.133"></a>
-<span class="sourceLineNo">134</span>      }<a name="line.134"></a>
-<span class="sourceLineNo">135</span>    }<a name="line.135"></a>
-<span class="sourceLineNo">136</span>    return returnValue;<a name="line.136"></a>
-<span class="sourceLineNo">137</span>  }<a name="line.137"></a>
-<span class="sourceLineNo">138</span><a name="line.138"></a>
-<span class="sourceLineNo">139</span>  /**<a name="line.139"></a>
-<span class="sourceLineNo">140</span>   * Registers the supplied {@link Synchronization} with the<a name="line.140"></a>
-<span class="sourceLineNo">141</span>   * {@linkplain TransactionManager#getTransaction() current<a name="line.141"></a>
-<span class="sourceLineNo">142</span>   * &lt;code&gt;Transaction&lt;/code&gt;}.<a name="line.142"></a>
-<span class="sourceLineNo">143</span>   *<a name="line.143"></a>
-<span class="sourceLineNo">144</span>   * @exception RuntimeException if an invocation of the {@link<a name="line.144"></a>
-<span class="sourceLineNo">145</span>   * TransactionManager#getTransaction()} method resulted in a {@link<a name="line.145"></a>
-<span class="sourceLineNo">146</span>   * SystemException}, or if an invocation of the {@link<a name="line.146"></a>
-<span class="sourceLineNo">147</span>   * Transaction#registerSynchronization(Synchronization)} method<a name="line.147"></a>
-<span class="sourceLineNo">148</span>   * resulted in either a {@link SystemException} or a {@link<a name="line.148"></a>
-<span class="sourceLineNo">149</span>   * RollbackException}<a name="line.149"></a>
-<span class="sourceLineNo">150</span>   *<a name="line.150"></a>
-<span class="sourceLineNo">151</span>   * @see com.arjuna.ats.jta.TransactionManager#transactionManager()<a name="line.151"></a>
-<span class="sourceLineNo">152</span>   *<a name="line.152"></a>
-<span class="sourceLineNo">153</span>   * @see Transaction#registerSynchronization(Synchronization)<a name="line.153"></a>
-<span class="sourceLineNo">154</span>   */<a name="line.154"></a>
-<span class="sourceLineNo">155</span>  @Override<a name="line.155"></a>
-<span class="sourceLineNo">156</span>  public final void registerSynchronization(final Synchronization synchronization) {<a name="line.156"></a>
-<span class="sourceLineNo">157</span>    final TransactionManager transactionManager = com.arjuna.ats.jta.TransactionManager.transactionManager();<a name="line.157"></a>
-<span class="sourceLineNo">158</span>    if (transactionManager != null) {<a name="line.158"></a>
-<span class="sourceLineNo">159</span>      Transaction transaction = null;<a name="line.159"></a>
-<span class="sourceLineNo">160</span>      try {<a name="line.160"></a>
-<span class="sourceLineNo">161</span>        transaction = transactionManager.getTransaction();<a name="line.161"></a>
-<span class="sourceLineNo">162</span>      } catch (final SystemException e) {<a name="line.162"></a>
-<span class="sourceLineNo">163</span>        throw new RuntimeException(e.getMessage(), e);<a name="line.163"></a>
-<span class="sourceLineNo">164</span>      }<a name="line.164"></a>
-<span class="sourceLineNo">165</span>      if (transaction != null) {<a name="line.165"></a>
-<span class="sourceLineNo">166</span>        try {<a name="line.166"></a>
-<span class="sourceLineNo">167</span>          transaction.registerSynchronization(synchronization);<a name="line.167"></a>
-<span class="sourceLineNo">168</span>        } catch (final SystemException | RollbackException e) {<a name="line.168"></a>
-<span class="sourceLineNo">169</span>          throw new RuntimeException(e.getMessage(), e);<a name="line.169"></a>
-<span class="sourceLineNo">170</span>        }<a name="line.170"></a>
-<span class="sourceLineNo">171</span>      }<a name="line.171"></a>
-<span class="sourceLineNo">172</span>    }<a name="line.172"></a>
-<span class="sourceLineNo">173</span>  }<a name="line.173"></a>
-<span class="sourceLineNo">174</span><a name="line.174"></a>
-<span class="sourceLineNo">175</span>  /**<a name="line.175"></a>
-<span class="sourceLineNo">176</span>   * Does nothing when invoked.<a name="line.176"></a>
-<span class="sourceLineNo">177</span>   */<a name="line.177"></a>
-<span class="sourceLineNo">178</span>  @Override<a name="line.178"></a>
-<span class="sourceLineNo">179</span>  public final void cleanup() {<a name="line.179"></a>
-<span class="sourceLineNo">180</span><a name="line.180"></a>
-<span class="sourceLineNo">181</span>  }<a name="line.181"></a>
-<span class="sourceLineNo">182</span><a name="line.182"></a>
-<span class="sourceLineNo">183</span>  <a name="line.183"></a>
-<span class="sourceLineNo">184</span>}<a name="line.184"></a>
+<span class="sourceLineNo">102</span>   * &lt;p&gt;This method returns {@code true} if the current {@link<a name="line.102"></a>
+<span class="sourceLineNo">103</span>   * UserTransaction} {@linkplain UserTransaction#getStatus() has a<a name="line.103"></a>
+<span class="sourceLineNo">104</span>   * status} equal to one of the following values:&lt;/p&gt;<a name="line.104"></a>
+<span class="sourceLineNo">105</span>   *<a name="line.105"></a>
+<span class="sourceLineNo">106</span>   * &lt;ul&gt;<a name="line.106"></a>
+<span class="sourceLineNo">107</span>   *<a name="line.107"></a>
+<span class="sourceLineNo">108</span>   * &lt;li&gt;{@link Status#STATUS_ACTIVE}&lt;/li&gt;<a name="line.108"></a>
+<span class="sourceLineNo">109</span>   *<a name="line.109"></a>
+<span class="sourceLineNo">110</span>   * &lt;li&gt;{@link Status#STATUS_COMMITTING}&lt;/li&gt;<a name="line.110"></a>
+<span class="sourceLineNo">111</span>   *<a name="line.111"></a>
+<span class="sourceLineNo">112</span>   * &lt;li&gt;{@link Status#STATUS_MARKED_ROLLBACK}&lt;/li&gt;<a name="line.112"></a>
+<span class="sourceLineNo">113</span>   *<a name="line.113"></a>
+<span class="sourceLineNo">114</span>   * &lt;li&gt;{@link Status#STATUS_PREPARED}&lt;/li&gt;<a name="line.114"></a>
+<span class="sourceLineNo">115</span>   *<a name="line.115"></a>
+<span class="sourceLineNo">116</span>   * &lt;li&gt;{@link Status#STATUS_PREPARING}&lt;/li&gt;<a name="line.116"></a>
+<span class="sourceLineNo">117</span>   *<a name="line.117"></a>
+<span class="sourceLineNo">118</span>   * &lt;li&gt;{@link Status#STATUS_ROLLING_BACK}&lt;/li&gt;<a name="line.118"></a>
+<span class="sourceLineNo">119</span>   *<a name="line.119"></a>
+<span class="sourceLineNo">120</span>   * &lt;/ul&gt;<a name="line.120"></a>
+<span class="sourceLineNo">121</span>   *<a name="line.121"></a>
+<span class="sourceLineNo">122</span>   * @return {@code true} if the current {@link UserTransaction}<a name="line.122"></a>
+<span class="sourceLineNo">123</span>   * {@linkplain UserTransaction#getStatus() has a status} indicating<a name="line.123"></a>
+<span class="sourceLineNo">124</span>   * that it is active; {@code false} otherwise<a name="line.124"></a>
+<span class="sourceLineNo">125</span>   *<a name="line.125"></a>
+<span class="sourceLineNo">126</span>   * @exception RuntimeException if an invocation of the {@link<a name="line.126"></a>
+<span class="sourceLineNo">127</span>   * UserTransaction#getStatus()} method resulted in a {@link<a name="line.127"></a>
+<span class="sourceLineNo">128</span>   * SystemException}<a name="line.128"></a>
+<span class="sourceLineNo">129</span>   *<a name="line.129"></a>
+<span class="sourceLineNo">130</span>   * @see Status<a name="line.130"></a>
+<span class="sourceLineNo">131</span>   */<a name="line.131"></a>
+<span class="sourceLineNo">132</span>  @Override<a name="line.132"></a>
+<span class="sourceLineNo">133</span>  public final boolean isTransactionActive() {<a name="line.133"></a>
+<span class="sourceLineNo">134</span>    final UserTransaction userTransaction;<a name="line.134"></a>
+<span class="sourceLineNo">135</span>    synchronized (this) {<a name="line.135"></a>
+<span class="sourceLineNo">136</span>      if (this.userTransaction == null) {<a name="line.136"></a>
+<span class="sourceLineNo">137</span>        this.userTransaction = CDI.current().select(UserTransaction.class).get();<a name="line.137"></a>
+<span class="sourceLineNo">138</span>      }<a name="line.138"></a>
+<span class="sourceLineNo">139</span>      userTransaction = this.userTransaction;<a name="line.139"></a>
+<span class="sourceLineNo">140</span>    }<a name="line.140"></a>
+<span class="sourceLineNo">141</span>    final boolean returnValue;<a name="line.141"></a>
+<span class="sourceLineNo">142</span>    if (userTransaction == null) {<a name="line.142"></a>
+<span class="sourceLineNo">143</span>      returnValue = false;<a name="line.143"></a>
+<span class="sourceLineNo">144</span>    } else {<a name="line.144"></a>
+<span class="sourceLineNo">145</span>      boolean temp = false;<a name="line.145"></a>
+<span class="sourceLineNo">146</span>      try {<a name="line.146"></a>
+<span class="sourceLineNo">147</span>        final int status = userTransaction.getStatus();<a name="line.147"></a>
+<span class="sourceLineNo">148</span>        temp =<a name="line.148"></a>
+<span class="sourceLineNo">149</span>          status == Status.STATUS_ACTIVE ||<a name="line.149"></a>
+<span class="sourceLineNo">150</span>          status == Status.STATUS_COMMITTING ||<a name="line.150"></a>
+<span class="sourceLineNo">151</span>          status == Status.STATUS_MARKED_ROLLBACK ||<a name="line.151"></a>
+<span class="sourceLineNo">152</span>          status == Status.STATUS_PREPARED ||<a name="line.152"></a>
+<span class="sourceLineNo">153</span>          status == Status.STATUS_PREPARING ||<a name="line.153"></a>
+<span class="sourceLineNo">154</span>          status == Status.STATUS_ROLLING_BACK;<a name="line.154"></a>
+<span class="sourceLineNo">155</span>      } catch (final SystemException e) {<a name="line.155"></a>
+<span class="sourceLineNo">156</span>        throw new RuntimeException(e.getMessage(), e);<a name="line.156"></a>
+<span class="sourceLineNo">157</span>      } finally {<a name="line.157"></a>
+<span class="sourceLineNo">158</span>        returnValue = temp;<a name="line.158"></a>
+<span class="sourceLineNo">159</span>      }<a name="line.159"></a>
+<span class="sourceLineNo">160</span>    }<a name="line.160"></a>
+<span class="sourceLineNo">161</span>    return returnValue;<a name="line.161"></a>
+<span class="sourceLineNo">162</span>  }<a name="line.162"></a>
+<span class="sourceLineNo">163</span><a name="line.163"></a>
+<span class="sourceLineNo">164</span>  /**<a name="line.164"></a>
+<span class="sourceLineNo">165</span>   * Registers the supplied {@link Synchronization} with the current<a name="line.165"></a>
+<span class="sourceLineNo">166</span>   * {@link Transaction}.<a name="line.166"></a>
+<span class="sourceLineNo">167</span>   *<a name="line.167"></a>
+<span class="sourceLineNo">168</span>   * @exception RuntimeException if an invocation of the {@link<a name="line.168"></a>
+<span class="sourceLineNo">169</span>   * TransactionManager#getTransaction()} method resulted in a {@link<a name="line.169"></a>
+<span class="sourceLineNo">170</span>   * SystemException}, or if an invocation of the {@link<a name="line.170"></a>
+<span class="sourceLineNo">171</span>   * Transaction#registerSynchronization(Synchronization)} method<a name="line.171"></a>
+<span class="sourceLineNo">172</span>   * resulted in either a {@link SystemException} or a {@link<a name="line.172"></a>
+<span class="sourceLineNo">173</span>   * RollbackException}<a name="line.173"></a>
+<span class="sourceLineNo">174</span>   *<a name="line.174"></a>
+<span class="sourceLineNo">175</span>   * @see Transaction#registerSynchronization(Synchronization)<a name="line.175"></a>
+<span class="sourceLineNo">176</span>   */<a name="line.176"></a>
+<span class="sourceLineNo">177</span>  @Override<a name="line.177"></a>
+<span class="sourceLineNo">178</span>  public final void registerSynchronization(final Synchronization synchronization) {<a name="line.178"></a>
+<span class="sourceLineNo">179</span>    final CDI&lt;Object&gt; cdi = CDI.current();    <a name="line.179"></a>
+<span class="sourceLineNo">180</span>    final Instance&lt;Transaction&gt; transactionInstance = cdi.select(Transaction.class);<a name="line.180"></a>
+<span class="sourceLineNo">181</span>    Transaction transaction = null;<a name="line.181"></a>
+<span class="sourceLineNo">182</span>    if (transactionInstance.isUnsatisfied()) {<a name="line.182"></a>
+<span class="sourceLineNo">183</span>      Instance&lt;TransactionManager&gt; transactionManagerInstance = cdi.select(TransactionManager.class);<a name="line.183"></a>
+<span class="sourceLineNo">184</span>      assert transactionManagerInstance != null;<a name="line.184"></a>
+<span class="sourceLineNo">185</span>      final TransactionManager transactionManager;<a name="line.185"></a>
+<span class="sourceLineNo">186</span>      if (transactionManagerInstance.isUnsatisfied()) {<a name="line.186"></a>
+<span class="sourceLineNo">187</span>        transactionManager = com.arjuna.ats.jta.TransactionManager.transactionManager();<a name="line.187"></a>
+<span class="sourceLineNo">188</span>      } else {<a name="line.188"></a>
+<span class="sourceLineNo">189</span>        transactionManager = transactionManagerInstance.get();<a name="line.189"></a>
+<span class="sourceLineNo">190</span>      }<a name="line.190"></a>
+<span class="sourceLineNo">191</span>      if (transactionManager != null) {<a name="line.191"></a>
+<span class="sourceLineNo">192</span>        try {<a name="line.192"></a>
+<span class="sourceLineNo">193</span>          transaction = transactionManager.getTransaction();<a name="line.193"></a>
+<span class="sourceLineNo">194</span>        } catch (final SystemException e) {<a name="line.194"></a>
+<span class="sourceLineNo">195</span>          throw new RuntimeException(e.getMessage(), e);<a name="line.195"></a>
+<span class="sourceLineNo">196</span>        }<a name="line.196"></a>
+<span class="sourceLineNo">197</span>      }<a name="line.197"></a>
+<span class="sourceLineNo">198</span>    } else {<a name="line.198"></a>
+<span class="sourceLineNo">199</span>      transaction = transactionInstance.get();<a name="line.199"></a>
+<span class="sourceLineNo">200</span>    }<a name="line.200"></a>
+<span class="sourceLineNo">201</span>    if (transaction != null) {<a name="line.201"></a>
+<span class="sourceLineNo">202</span>      try {<a name="line.202"></a>
+<span class="sourceLineNo">203</span>        transaction.registerSynchronization(synchronization);<a name="line.203"></a>
+<span class="sourceLineNo">204</span>      } catch (final SystemException | RollbackException e) {<a name="line.204"></a>
+<span class="sourceLineNo">205</span>        throw new RuntimeException(e.getMessage(), e);<a name="line.205"></a>
+<span class="sourceLineNo">206</span>      }<a name="line.206"></a>
+<span class="sourceLineNo">207</span>    }<a name="line.207"></a>
+<span class="sourceLineNo">208</span>  }<a name="line.208"></a>
+<span class="sourceLineNo">209</span><a name="line.209"></a>
+<span class="sourceLineNo">210</span>  /**<a name="line.210"></a>
+<span class="sourceLineNo">211</span>   * Releases any internal resources acquired during the lifespan of<a name="line.211"></a>
+<span class="sourceLineNo">212</span>   * this object.<a name="line.212"></a>
+<span class="sourceLineNo">213</span>   */<a name="line.213"></a>
+<span class="sourceLineNo">214</span>  @Override<a name="line.214"></a>
+<span class="sourceLineNo">215</span>  public synchronized final void cleanup() {<a name="line.215"></a>
+<span class="sourceLineNo">216</span>    this.userTransaction = null;<a name="line.216"></a>
+<span class="sourceLineNo">217</span>  }<a name="line.217"></a>
+<span class="sourceLineNo">218</span><a name="line.218"></a>
+<span class="sourceLineNo">219</span>  <a name="line.219"></a>
+<span class="sourceLineNo">220</span>}<a name="line.220"></a>
 
 
 
