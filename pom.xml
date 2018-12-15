@@ -4,13 +4,13 @@
 
   <groupId>org.microbean</groupId>
   <artifactId>microbean-narayana-jta-weld-se</artifactId>
-  <version>0.1.1-SNAPSHOT</version>
+  <version>0.1.1</version>
 
   <parent>
     <groupId>org.microbean</groupId>
     <artifactId>microbean-pluginmanagement-pom</artifactId>
     <version>9</version>
-    <relativePath/>
+    <relativePath />
   </parent>
 
   <name>microBean Narayana JTA Weld SE Integration</name>
@@ -22,7 +22,7 @@
     <connection>scm:git:git@github.com:microbean/${project.artifactId}.git</connection>
     <developerConnection>scm:git:git@github.com:microbean/${project.artifactId}.git</developerConnection>
     <url>https://github.com/microbean/${project.artifactId}/</url>
-    <tag>HEAD</tag>
+    <tag>v0.1.1</tag>
   </scm>
 
   <issueManagement>
