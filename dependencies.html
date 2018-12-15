@@ -28,7 +28,7 @@
       <div id="breadcrumbs">
         <ul class="breadcrumb">
         <li id="publishDate">Last Published: 2018-12-14</li>
-      <li id="projectVersion" class="pull-right">Version: 0.1.0</li>
+      <li id="projectVersion" class="pull-right">Version: 0.1.1</li>
         </ul>
       </div>
       <div class="row-fluid">
@@ -49,13 +49,13 @@
     <li><a href="dependency-management.html" title="Dependency Management"><span class="none"></span>Dependency Management</a>  </li>
     <li><a href="distribution-management.html" title="Distribution Management"><span class="none"></span>Distribution Management</a>  </li>
     <li><a href="index.html" title="About"><span class="none"></span>About</a>  </li>
-    <li><a href="issue-tracking.html" title="Issue Management"><span class="none"></span>Issue Management</a>  </li>
-    <li><a href="license.html" title="Licenses"><span class="none"></span>Licenses</a>  </li>
+    <li><a href="issue-management.html" title="Issue Management"><span class="none"></span>Issue Management</a>  </li>
+    <li><a href="licenses.html" title="Licenses"><span class="none"></span>Licenses</a>  </li>
     <li><a href="plugin-management.html" title="Plugin Management"><span class="none"></span>Plugin Management</a>  </li>
     <li><a href="plugins.html" title="Plugins"><span class="none"></span>Plugins</a>  </li>
-    <li><a href="team-list.html" title="Team"><span class="none"></span>Team</a>  </li>
-    <li><a href="source-repository.html" title="Source Code Management"><span class="none"></span>Source Code Management</a>  </li>
-    <li><a href="project-summary.html" title="Summary"><span class="none"></span>Summary</a>  </li>
+    <li><a href="scm.html" title="Source Code Management"><span class="none"></span>Source Code Management</a>  </li>
+    <li><a href="summary.html" title="Summary"><span class="none"></span>Summary</a>  </li>
+    <li><a href="team.html" title="Team"><span class="none"></span>Team</a>  </li>
       </ul>
   </li>
     <li><a href="project-reports.html" title="Project Reports"><span class="icon-chevron-right"></span>Project Reports</a>  </li>
@@ -86,8 +86,8 @@
 <th>Licenses</th></tr>
 <tr class="b">
 <td>org.jboss.narayana.jta</td>
-<td><a class="externalLink" href="http://www.jboss.org/jbosstm/narayana-jta-all/narayana-jta/">narayana-jta</a></td>
-<td>5.9.1.Final</td>
+<td><a class="externalLink" href="http://www.jboss.org/jbosstm/narayana-jta-all/jta/">jta</a></td>
+<td>5.9.2.Final</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.gnu.org/licenses/lgpl-2.1.html">LGPL 2.1</a></td></tr>
 <tr class="a">
@@ -121,7 +121,7 @@
 <tr class="b">
 <td>org.microbean</td>
 <td><a class="externalLink" href="https://microbean.github.io/microbean-weld-se-environment">microbean-weld-se-environment</a></td>
-<td>0.5.1</td>
+<td>0.5.2</td>
 <td>pom</td>
 <td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></td></tr></table></div><a name="Project_Dependencies_provided"></a>
 <div class="section">
@@ -143,7 +143,7 @@
 <tr class="a">
 <td>org.microbean</td>
 <td><a class="externalLink" href="https://microbean.github.io/microbean-base-specification">microbean-base-specification</a></td>
-<td>0.4.3</td>
+<td>0.4.4</td>
 <td>pom</td>
 <td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></td></tr></table></div></div><a name="Project_Transitive_Dependencies"></a>
 <div class="section">
@@ -172,12 +172,18 @@
 <td>jar</td>
 <td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
 <tr class="b">
-<td>org.jboss</td>
-<td><a class="externalLink" href="http://www.jboss.org">jboss-transaction-spi</a></td>
-<td>7.6.0.Final</td>
+<td>org.jboss.narayana</td>
+<td><a class="externalLink" href="http://www.jboss.org/jbosstm/common/">common</a></td>
+<td>5.9.2.Final</td>
 <td>jar</td>
-<td>Public Domain</td></tr>
+<td><a class="externalLink" href="http://www.gnu.org/licenses/lgpl-2.1.html">LGPL 2.1</a></td></tr>
 <tr class="a">
+<td>org.jboss.narayana.arjunacore</td>
+<td><a class="externalLink" href="http://www.jboss.org/jbosstm/arjunacore-all/arjuna/">arjuna</a></td>
+<td>5.9.2.Final</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.gnu.org/licenses/lgpl-2.1.html">LGPL 2.1</a></td></tr>
+<tr class="b">
 <td>org.jboss.weld</td>
 <td><a class="externalLink" href="http://weld.cdi-spec.org">weld-api</a></td>
 <td>3.0.SP4</td>
@@ -246,25 +252,25 @@
 <td><a class="externalLink" href="http://www.jboss.org/jboss-annotations-api_1.3_spec">jboss-annotations-api_1.3_spec</a></td>
 <td>1.0.0.Final</td>
 <td>jar</td>
-<td><a class="externalLink" href="https://javaee.github.io/glassfish/LICENSE">Common Development And Distribution License 1.1</a>-<a class="externalLink" href="http://openjdk.java.net/legal/gplv2+ce.html">GNU General Public License v2.0 only, with Classpath exception</a></td></tr>
+<td><a class="externalLink" href="https://javaee.github.io/glassfish/LICENSE">Common Development And Distribution License 1.1</a><a class="externalLink" href="http://openjdk.java.net/legal/gplv2+ce.html">GNU General Public License v2.0 only, with Classpath exception</a></td></tr>
 <tr class="a">
 <td>org.jboss.spec.javax.el</td>
 <td><a class="externalLink" href="http://www.jboss.org/jboss-el-api_3.0_spec">jboss-el-api_3.0_spec</a></td>
 <td>1.0.7.Final</td>
 <td>jar</td>
-<td><a class="externalLink" href="http://repository.jboss.org/licenses/cddl.txt">Common Development and Distribution License</a>-<a class="externalLink" href="http://repository.jboss.org/licenses/gpl-2.0-ce.txt">GNU General Public License, Version 2 with the Classpath Exception</a></td></tr>
+<td><a class="externalLink" href="http://repository.jboss.org/licenses/cddl.txt">Common Development and Distribution License</a><a class="externalLink" href="http://repository.jboss.org/licenses/gpl-2.0-ce.txt">GNU General Public License, Version 2 with the Classpath Exception</a></td></tr>
 <tr class="b">
 <td>org.jboss.spec.javax.interceptor</td>
 <td><a class="externalLink" href="http://www.jboss.org/jboss-interceptors-api_1.2_spec">jboss-interceptors-api_1.2_spec</a></td>
 <td>1.0.0.Final</td>
 <td>jar</td>
-<td><a class="externalLink" href="http://repository.jboss.org/licenses/cddl.txt">Common Development and Distribution License</a>-<a class="externalLink" href="http://repository.jboss.org/licenses/gpl-2.0-ce.txt">GNU General Public License, Version 2 with the Classpath Exception</a></td></tr>
+<td><a class="externalLink" href="http://repository.jboss.org/licenses/cddl.txt">Common Development and Distribution License</a><a class="externalLink" href="http://repository.jboss.org/licenses/gpl-2.0-ce.txt">GNU General Public License, Version 2 with the Classpath Exception</a></td></tr>
 <tr class="a">
 <td>org.jboss.spec.javax.transaction</td>
 <td><a class="externalLink" href="http://www.jboss.org/jboss-transaction-api_1.2_spec">jboss-transaction-api_1.2_spec</a></td>
 <td>1.0.0.Final</td>
 <td>jar</td>
-<td><a class="externalLink" href="http://repository.jboss.org/licenses/cddl.txt">Common Development and Distribution License</a>-<a class="externalLink" href="http://repository.jboss.org/licenses/gpl-2.0-ce.txt">GNU General Public License, Version 2 with the Classpath Exception</a></td></tr>
+<td><a class="externalLink" href="http://repository.jboss.org/licenses/cddl.txt">Common Development and Distribution License</a><a class="externalLink" href="http://repository.jboss.org/licenses/gpl-2.0-ce.txt">GNU General Public License, Version 2 with the Classpath Exception</a></td></tr>
 <tr class="b">
 <td>org.jboss.weld</td>
 <td><a class="externalLink" href="http://weld.cdi-spec.org">weld-core-impl</a></td>
@@ -292,31 +298,31 @@
 <tr class="b">
 <td>org.microbean</td>
 <td><a class="externalLink" href="https://microbean.github.io/microbean-abstract-environment">microbean-abstract-environment</a></td>
-<td>0.5.0</td>
+<td>0.5.1</td>
 <td>pom</td>
 <td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></td></tr>
 <tr class="a">
 <td>org.microbean</td>
 <td><a class="externalLink" href="https://microbean.github.io/microbean-configuration">microbean-configuration</a></td>
-<td>0.4.3</td>
+<td>0.4.4</td>
 <td>jar</td>
 <td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></td></tr>
 <tr class="b">
 <td>org.microbean</td>
-<td><a class="externalLink" href="https://ljnelson.github.io/microbean-main">microbean-main</a></td>
-<td>6</td>
+<td><a class="externalLink" href="https://microbean.github.io/microbean-main">microbean-main</a></td>
+<td>7</td>
 <td>jar</td>
-<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">MIT</a></td></tr>
+<td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></td></tr>
 <tr class="a">
 <td>org.slf4j</td>
 <td><a class="externalLink" href="http://www.slf4j.org">slf4j-api</a></td>
-<td>1.7.25</td>
+<td>1.8.0-beta2</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></td></tr>
 <tr class="b">
 <td>org.slf4j</td>
 <td><a class="externalLink" href="http://www.slf4j.org">slf4j-jdk14</a></td>
-<td>1.7.25</td>
+<td>1.8.0-beta2</td>
 <td>jar</td>
 <td><a class="externalLink" href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></td></tr></table></div><a name="Project_Transitive_Dependencies_provided"></a>
 <div class="section">
@@ -356,13 +362,13 @@
 <tr class="b">
 <td>org.microbean</td>
 <td><a class="externalLink" href="https://microbean.github.io/microbean-configuration-api">microbean-configuration-api</a></td>
-<td>0.4.3</td>
+<td>0.4.4</td>
 <td>jar</td>
 <td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></td></tr>
 <tr class="a">
 <td>org.microbean</td>
 <td><a class="externalLink" href="https://microbean.github.io/microbean-configuration-cdi">microbean-configuration-cdi</a></td>
-<td>0.4.3</td>
+<td>0.4.4</td>
 <td>jar</td>
 <td><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></td></tr></table></div></div><a name="Project_Dependency_Graph"></a>
 <div class="section">
@@ -390,7 +396,7 @@
 <div class="section">
 <h3><a name="Dependency_Tree"></a>Dependency Tree</h3>
 <ul>
-<li>org.microbean:microbean-narayana-jta-weld-se:jar:0.1.0 <img id="_img1" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep0', '_img1' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep0" style="display:none">
+<li>org.microbean:microbean-narayana-jta-weld-se:jar:0.1.1 <img id="_img1" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep0', '_img1' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep0" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>microBean Narayana JTA Weld SE Integration</th></tr>
@@ -419,7 +425,7 @@
 <p><b>Description: </b>This is the core API of hamcrest matcher framework to be used by third-party framework providers. This includes the a foundation set of matcher implementations for common operations.</p>
 <p><b>URL: </b><a class="externalLink" href="https://github.com/hamcrest/JavaHamcrest/hamcrest-core">https://github.com/hamcrest/JavaHamcrest/hamcrest-core</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></p></td></tr></table></div></li></ul></li>
-<li>org.microbean:microbean-weld-se-environment:pom:0.5.1 (test) <img id="_img7" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep6', '_img7' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep6" style="display:none">
+<li>org.microbean:microbean-weld-se-environment:pom:0.5.2 (test) <img id="_img7" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep6', '_img7' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep6" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>microBean Weld SE Environment</th></tr>
@@ -475,7 +481,7 @@
 <p><b>Description: </b>A bytecode writer that creates .class files at runtime</p>
 <p><b>URL: </b><a class="externalLink" href="https://github.com/jbossas/jboss-classfilewriter">https://github.com/jbossas/jboss-classfilewriter</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, version 2.0</a></p></td></tr></table></div></li></ul></li>
-<li>org.microbean:microbean-abstract-environment:pom:0.5.0 (test) <img id="_img19" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep18', '_img19' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep18" style="display:none">
+<li>org.microbean:microbean-abstract-environment:pom:0.5.1 (test) <img id="_img19" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep18', '_img19' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep18" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>microBean Abstract Environment</th></tr>
@@ -524,7 +530,7 @@
         including resolving of field and method types.</p>
 <p><b>URL: </b><a class="externalLink" href="http://github.com/FasterXML/java-classmate">http://github.com/FasterXML/java-classmate</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li></ul></li>
-<li>org.microbean:microbean-configuration:jar:0.4.3 (test) <img id="_img29" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep28', '_img29' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep28" style="display:none">
+<li>org.microbean:microbean-configuration:jar:0.4.4 (test) <img id="_img29" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep28', '_img29' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep28" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>microBean Configuration</th></tr>
@@ -533,16 +539,16 @@
 <p><b>Description: </b>microBean Configuration</p>
 <p><b>URL: </b><a class="externalLink" href="https://microbean.github.io/microbean-configuration">https://microbean.github.io/microbean-configuration</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></p></td></tr></table></div></li>
-<li>org.microbean:microbean-main:jar:6 (test) <img id="_img31" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep30', '_img31' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep30" style="display:none">
+<li>org.microbean:microbean-main:jar:7 (test) <img id="_img31" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep30', '_img31' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep30" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
-<th>MicroBean Main</th></tr>
+<th>microBean Main</th></tr>
 <tr class="b">
 <td>
-<p><b>Description: </b>MicroBean Main</p>
-<p><b>URL: </b><a class="externalLink" href="https://ljnelson.github.io/microbean-main">https://ljnelson.github.io/microbean-main</a></p>
-<p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">MIT</a></p></td></tr></table></div></li></ul></li>
-<li>org.slf4j:slf4j-jdk14:jar:1.7.25 (test) <img id="_img33" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep32', '_img33' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep32" style="display:none">
+<p><b>Description: </b>microBean Main</p>
+<p><b>URL: </b><a class="externalLink" href="https://microbean.github.io/microbean-main">https://microbean.github.io/microbean-main</a></p>
+<p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></p></td></tr></table></div></li></ul></li>
+<li>org.slf4j:slf4j-jdk14:jar:1.8.0-beta2 (test) <img id="_img33" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep32', '_img33' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep32" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>SLF4J JDK14 Binding</th></tr>
@@ -552,7 +558,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://www.slf4j.org">http://www.slf4j.org</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></p></td></tr></table></div>
 <ul>
-<li>org.slf4j:slf4j-api:jar:1.7.25 (test) <img id="_img35" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep34', '_img35' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep34" style="display:none">
+<li>org.slf4j:slf4j-api:jar:1.8.0-beta2 (test) <img id="_img35" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep34', '_img35' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep34" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>SLF4J API Module</th></tr>
@@ -653,7 +659,7 @@
 <p><b>Description: </b>Project GlassFish Java Transaction API</p>
 <p><b>URL: </b><a class="externalLink" href="http://jta-spec.java.net">http://jta-spec.java.net</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://glassfish.dev.java.net/nonav/public/CDDL+GPL.html">CDDL + GPLv2 with classpath exception</a></p></td></tr></table></div></li>
-<li>org.microbean:microbean-base-specification:pom:0.4.3 (provided) <img id="_img57" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep56', '_img57' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep56" style="display:none">
+<li>org.microbean:microbean-base-specification:pom:0.4.4 (provided) <img id="_img57" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep56', '_img57' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep56" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>microBean Base Specification</th></tr>
@@ -663,7 +669,7 @@
 <p><b>URL: </b><a class="externalLink" href="https://microbean.github.io/microbean-base-specification">https://microbean.github.io/microbean-base-specification</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></p></td></tr></table></div>
 <ul>
-<li>org.microbean:microbean-configuration-api:jar:0.4.3 (provided) <img id="_img59" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep58', '_img59' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep58" style="display:none">
+<li>org.microbean:microbean-configuration-api:jar:0.4.4 (provided) <img id="_img59" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep58', '_img59' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep58" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>microBean Configuration API</th></tr>
@@ -672,7 +678,7 @@
 <p><b>Description: </b>microBean Configuration API</p>
 <p><b>URL: </b><a class="externalLink" href="https://microbean.github.io/microbean-configuration-api">https://microbean.github.io/microbean-configuration-api</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></p></td></tr></table></div></li>
-<li>org.microbean:microbean-configuration-cdi:jar:0.4.3 (provided) <img id="_img61" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep60', '_img61' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep60" style="display:none">
+<li>org.microbean:microbean-configuration-cdi:jar:0.4.4 (provided) <img id="_img61" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep60', '_img61' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep60" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
 <th>microBean Configuration for CDI</th></tr>
@@ -735,38 +741,45 @@
 <p><b>Description: </b>APIs for Weld, the reference implementation of Contexts and Dependency Injection for Java EE</p>
 <p><b>URL: </b><a class="externalLink" href="http://weld.cdi-spec.org">http://weld.cdi-spec.org</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License, Version 2.0</a></p></td></tr></table></div></li>
-<li>org.jboss.narayana.jta:narayana-jta:jar:5.9.1.Final (compile) <img id="_img75" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep74', '_img75' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep74" style="display:none">
+<li>org.jboss.narayana.jta:jta:jar:5.9.2.Final (compile) <img id="_img75" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep74', '_img75' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep74" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
-<th>Narayana: ArjunaJTA narayana-jta</th></tr>
+<th>Narayana: ArjunaJTA jta</th></tr>
 <tr class="b">
 <td>
-<p><b>Description: </b>Narayana: ArjunaJTA narayana-jta (jta uber jar)</p>
-<p><b>URL: </b><a class="externalLink" href="http://www.jboss.org/jbosstm/narayana-jta-all/narayana-jta/">http://www.jboss.org/jbosstm/narayana-jta-all/narayana-jta/</a></p>
+<p><b>Description: </b>Narayana: ArjunaJTA jta</p>
+<p><b>URL: </b><a class="externalLink" href="http://www.jboss.org/jbosstm/narayana-jta-all/jta/">http://www.jboss.org/jbosstm/narayana-jta-all/jta/</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.gnu.org/licenses/lgpl-2.1.html">LGPL 2.1</a></p></td></tr></table></div>
 <ul>
-<li>org.jboss:jboss-transaction-spi:jar:7.6.0.Final (compile) <img id="_img77" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep76', '_img77' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep76" style="display:none">
+<li>org.jboss.narayana:common:jar:5.9.2.Final (compile) <img id="_img77" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep76', '_img77' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep76" style="display:none">
 <table border="0" class="table table-striped">
 <tr class="a">
-<th>JBoss Transaction SPI</th></tr>
+<th>Narayana: common</th></tr>
 <tr class="b">
 <td>
-<p><b>Description: </b>The Java Transaction SPI classes</p>
-<p><b>URL: </b><a class="externalLink" href="http://www.jboss.org">http://www.jboss.org</a></p>
-<p><b>Project Licenses: </b>Public Domain</p></td></tr></table></div></li></ul></li></ul></li></ul></div></div><a name="Licenses"></a>
+<p><b>Description: </b>Narayana: common</p>
+<p><b>URL: </b><a class="externalLink" href="http://www.jboss.org/jbosstm/common/">http://www.jboss.org/jbosstm/common/</a></p>
+<p><b>Project Licenses: </b><a class="externalLink" href="http://www.gnu.org/licenses/lgpl-2.1.html">LGPL 2.1</a></p></td></tr></table></div></li>
+<li>org.jboss.narayana.arjunacore:arjuna:jar:5.9.2.Final (compile) <img id="_img79" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep78', '_img79' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep78" style="display:none">
+<table border="0" class="table table-striped">
+<tr class="a">
+<th>Narayana: ArjunaCore arjuna</th></tr>
+<tr class="b">
+<td>
+<p><b>Description: </b>Narayana: ArjunaCore Arjuna</p>
+<p><b>URL: </b><a class="externalLink" href="http://www.jboss.org/jbosstm/arjunacore-all/arjuna/">http://www.jboss.org/jbosstm/arjunacore-all/arjuna/</a></p>
+<p><b>Project Licenses: </b><a class="externalLink" href="http://www.gnu.org/licenses/lgpl-2.1.html">LGPL 2.1</a></p></td></tr></table></div></li></ul></li></ul></li></ul></div></div><a name="Licenses"></a>
 <div class="section">
 <h2><a name="Licenses"></a>Licenses</h2>
 <p><b>Apache License, version 2.0: </b>JBoss Logging 3, classfilewriter</p>
 <p><b>Common Development and Distribution License: </b>Expression Language 3.0 API, Java Transaction API, Java(TM) EE Interceptors 1.2 API</p>
 <p><b>Eclipse Public License 1.0: </b>JUnit</p>
 <p><b>MIT License: </b>SLF4J API Module, SLF4J JDK14 Binding</p>
-<p><b>Public Domain: </b>JBoss Transaction SPI</p>
 <p><b>New BSD License: </b>Hamcrest Core</p>
-<p><b>Apache License 2.0: </b>Bean Validation API, CDI APIs, Hibernate Validator Engine, Hibernate Validator Portable Extension, microBean Abstract Environment, microBean Base Specification, microBean Configuration, microBean Configuration API, microBean Configuration for CDI, microBean Narayana JTA Weld SE Integration, microBean Weld SE Environment</p>
+<p><b>Apache License 2.0: </b>Bean Validation API, CDI APIs, Hibernate Validator Engine, Hibernate Validator Portable Extension, microBean Abstract Environment, microBean Base Specification, microBean Configuration, microBean Configuration API, microBean Configuration for CDI, microBean Main, microBean Narayana JTA Weld SE Integration, microBean Weld SE Environment</p>
 <p><b>Apache License, Version 2.0: </b>Java Annotation Indexer, Weld APIs, Weld Environment Common, Weld Implementation (Core), Weld JTA, Weld Probe Core, Weld SE (Core), Weld SPIs for container integration</p>
-<p><b>MIT: </b>MicroBean Main</p>
 <p><b>GNU General Public License v2.0 only, with Classpath exception: </b>Common Annotations 1.3 API</p>
-<p><b>LGPL 2.1: </b>Narayana: ArjunaJTA narayana-jta</p>
+<p><b>LGPL 2.1: </b>Narayana: ArjunaCore arjuna, Narayana: ArjunaJTA jta, Narayana: common</p>
 <p><b>CDDL + GPLv2 with classpath exception: </b>Expression Language 3.0, Expression Language 3.0 API, javax.annotation API, javax.interceptor API, javax.transaction API</p>
 <p><b>GNU General Public License, Version 2 with the Classpath Exception: </b>Expression Language 3.0 API, Java Transaction API, Java(TM) EE Interceptors 1.2 API</p>
 <p><b>The Apache Software License, Version 2.0: </b>ClassMate, javax.inject</p>
@@ -895,14 +908,6 @@
 <td>1.6</td>
 <td>Yes</td></tr>
 <tr class="b">
-<td>jboss-transaction-spi-7.6.0.Final.jar</td>
-<td>34 kB</td>
-<td>53</td>
-<td>39</td>
-<td>4</td>
-<td>1.6</td>
-<td>Yes</td></tr>
-<tr class="a">
 <td>jboss-classfilewriter-1.2.3.Final.jar</td>
 <td>119 kB</td>
 <td>88</td>
@@ -910,7 +915,7 @@
 <td>6</td>
 <td>1.8</td>
 <td>Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td>jboss-logging-3.3.2.Final.jar</td>
 <td>66.5 kB</td>
 <td>57</td>
@@ -918,15 +923,31 @@
 <td>1</td>
 <td>1.6</td>
 <td>Yes</td></tr>
+<tr class="b">
+<td>common-5.9.2.Final.jar</td>
+<td>32.6 kB</td>
+<td>35</td>
+<td>17</td>
+<td>5</td>
+<td>1.8</td>
+<td>Yes</td></tr>
 <tr class="a">
-<td>narayana-jta-5.9.1.Final.jar</td>
-<td>901.3 kB</td>
-<td>613</td>
-<td>472</td>
-<td>81</td>
+<td>arjuna-5.9.2.Final.jar</td>
+<td>485.4 kB</td>
+<td>301</td>
+<td>251</td>
+<td>33</td>
 <td>1.8</td>
 <td>Yes</td></tr>
 <tr class="b">
+<td>jta-5.9.2.Final.jar</td>
+<td>205.3 kB</td>
+<td>139</td>
+<td>97</td>
+<td>23</td>
+<td>1.8</td>
+<td>Yes</td></tr>
+<tr class="a">
 <td>jboss-annotations-api_1.3_spec-1.0.0.Final.jar</td>
 <td>19.9 kB</td>
 <td>29</td>
@@ -934,7 +955,7 @@
 <td>3</td>
 <td>1.8</td>
 <td>Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td>jboss-el-api_3.0_spec-1.0.7.Final.jar</td>
 <td>85.7 kB</td>
 <td>74</td>
@@ -942,7 +963,7 @@
 <td>2</td>
 <td>1.8</td>
 <td>Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td>jboss-interceptors-api_1.2_spec-1.0.0.Final.jar</td>
 <td>16.2 kB</td>
 <td>22</td>
@@ -950,7 +971,7 @@
 <td>1</td>
 <td>1.6</td>
 <td>Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td>jboss-transaction-api_1.2_spec-1.0.0.Final.jar</td>
 <td>27.7 kB</td>
 <td>35</td>
@@ -958,7 +979,7 @@
 <td>2</td>
 <td>1.6</td>
 <td>Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td>weld-api-3.0.SP4.jar</td>
 <td>32.1 kB</td>
 <td>65</td>
@@ -966,7 +987,7 @@
 <td>11</td>
 <td>1.8</td>
 <td>Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td>weld-core-impl-3.0.5.Final.jar</td>
 <td>1.7 MB</td>
 <td>1172</td>
@@ -974,7 +995,7 @@
 <td>60</td>
 <td>1.8</td>
 <td>Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td>weld-spi-3.0.SP4.jar</td>
 <td>90.9 kB</td>
 <td>164</td>
@@ -982,7 +1003,7 @@
 <td>25</td>
 <td>1.8</td>
 <td>Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td>weld-environment-common-3.0.5.Final.jar</td>
 <td>85.6 kB</td>
 <td>73</td>
@@ -990,7 +1011,7 @@
 <td>6</td>
 <td>1.8</td>
 <td>Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td>weld-jta-3.0.5.Final.jar</td>
 <td>22.5 kB</td>
 <td>30</td>
@@ -998,7 +1019,7 @@
 <td>1</td>
 <td>1.8</td>
 <td>Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td>weld-probe-core-3.0.5.Final.jar</td>
 <td>819.9 kB</td>
 <td>123</td>
@@ -1006,7 +1027,7 @@
 <td>1</td>
 <td>1.8</td>
 <td>Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td>weld-se-core-3.0.5.Final.jar</td>
 <td>70.6 kB</td>
 <td>70</td>
@@ -1014,79 +1035,79 @@
 <td>8</td>
 <td>1.8</td>
 <td>Yes</td></tr>
+<tr class="b">
+<td>microbean-abstract-environment-0.5.1.pom</td>
+<td>8 kB</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td></tr>
 <tr class="a">
-<td>microbean-abstract-environment-0.5.0.pom</td>
-<td>7.5 kB</td>
+<td>microbean-base-specification-0.4.4.pom</td>
+<td>5 kB</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
 <tr class="b">
-<td>microbean-base-specification-0.4.3.pom</td>
-<td>4.7 kB</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-<td>-</td></tr>
-<tr class="a">
-<td>microbean-configuration-0.4.3.jar</td>
-<td>57.2 kB</td>
+<td>microbean-configuration-0.4.4.jar</td>
+<td>56.5 kB</td>
 <td>61</td>
 <td>43</td>
 <td>3</td>
 <td>1.8</td>
 <td>Yes</td></tr>
-<tr class="b">
-<td>microbean-configuration-api-0.4.3.jar</td>
-<td>17.3 kB</td>
+<tr class="a">
+<td>microbean-configuration-api-0.4.4.jar</td>
+<td>17.2 kB</td>
 <td>18</td>
 <td>6</td>
 <td>1</td>
 <td>1.8</td>
 <td>Yes</td></tr>
-<tr class="a">
-<td>microbean-configuration-cdi-0.4.3.jar</td>
-<td>30.7 kB</td>
+<tr class="b">
+<td>microbean-configuration-cdi-0.4.4.jar</td>
+<td>30.4 kB</td>
 <td>31</td>
 <td>14</td>
 <td>2</td>
 <td>1.8</td>
 <td>Yes</td></tr>
-<tr class="b">
-<td>microbean-main-6.jar</td>
-<td>9.2 kB</td>
+<tr class="a">
+<td>microbean-main-7.jar</td>
+<td>9.1 kB</td>
 <td>14</td>
 <td>1</td>
 <td>1</td>
 <td>1.8</td>
 <td>Yes</td></tr>
-<tr class="a">
-<td>microbean-weld-se-environment-0.5.1.pom</td>
-<td>6.5 kB</td>
+<tr class="b">
+<td>microbean-weld-se-environment-0.5.2.pom</td>
+<td>6.6 kB</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
+<tr class="a">
+<td>slf4j-api-1.8.0-beta2.jar</td>
+<td>43.9 kB</td>
+<td>51</td>
+<td>39</td>
+<td>5</td>
+<td>-</td>
+<td>Yes</td></tr>
 <tr class="b">
-<td>slf4j-api-1.7.25.jar</td>
-<td>41.2 kB</td>
-<td>46</td>
-<td>34</td>
+<td>slf4j-jdk14-1.8.0-beta2.jar</td>
+<td>8.1 kB</td>
+<td>16</td>
 <td>4</td>
-<td>1.5</td>
+<td>2</td>
+<td>-</td>
 <td>Yes</td></tr>
 <tr class="a">
-<td>slf4j-jdk14-1.7.25.jar</td>
-<td>8.5 kB</td>
-<td>15</td>
-<td>5</td>
-<td>1</td>
-<td>1.5</td>
-<td>Yes</td></tr>
-<tr class="b">
 <th>Total</th>
 <th>Size</th>
 <th>Entries</th>
@@ -1094,176 +1115,38 @@
 <th>Packages</th>
 <th>Java Version</th>
 <th>Debug Information</th></tr>
-<tr class="a">
-<td>38</td>
-<td>6.6 MB</td>
-<td>5013</td>
-<td>4137</td>
-<td>372</td>
-<td>1.8</td>
-<td>34</td></tr>
 <tr class="b">
-<td>compile: 6</td>
-<td>compile: 1.2 MB</td>
-<td>compile: 1073</td>
-<td>compile: 819</td>
-<td>compile: 133</td>
-<td>-</td>
-<td>compile: 5</td></tr>
+<td>39</td>
+<td>6.4 MB</td>
+<td>4828</td>
+<td>3995</td>
+<td>350</td>
+<td>1.8</td>
+<td>35</td></tr>
 <tr class="a">
+<td>compile: 7</td>
+<td>compile: 956.4 kB</td>
+<td>compile: 882</td>
+<td>compile: 673</td>
+<td>compile: 109</td>
+<td>-</td>
+<td>compile: 6</td></tr>
+<tr class="b">
 <td>test: 24</td>
 <td>test: 5.2 MB</td>
-<td>test: 3583</td>
-<td>test: 3059</td>
-<td>test: 220</td>
+<td>test: 3589</td>
+<td>test: 3063</td>
+<td>test: 222</td>
 <td>-</td>
 <td>test: 22</td></tr>
-<tr class="b">
+<tr class="a">
 <td>provided: 8</td>
 <td>provided: 306.1 kB</td>
 <td>provided: 357</td>
 <td>provided: 259</td>
 <td>provided: 19</td>
 <td>-</td>
-<td>provided: 7</td></tr></table></div><a name="Dependency_Repository_Locations"></a>
-<div class="section">
-<h2><a name="Dependency_Repository_Locations"></a>Dependency Repository Locations</h2>
-<table border="0" class="table table-striped">
-<tr class="a">
-<th>Repo ID</th>
-<th>URL</th>
-<th>Release</th>
-<th>Snapshot</th></tr>
-<tr class="b">
-<td>central</td>
-<td><a class="externalLink" href="https://repo.maven.apache.org/maven2">https://repo.maven.apache.org/maven2</a></td>
-<td>Yes</td>
-<td>No</td></tr></table>
-<p>Repository locations for each of the Dependencies.</p>
-<table border="0" class="table table-striped">
-<tr class="a">
-<th>Artifact</th>
-<th>nexus</th></tr>
-<tr class="b">
-<td>com.fasterxml:classmate:jar:1.4.0</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//com/fasterxml/classmate/1.4.0/classmate-1.4.0.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>javax.annotation:javax.annotation-api:jar:1.3</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//javax/annotation/javax.annotation-api/1.3/javax.annotation-api-1.3.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
-<td>javax.el:javax.el-api:jar:3.0.1-b06</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//javax/el/javax.el-api/3.0.1-b06/javax.el-api-3.0.1-b06.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>javax.enterprise:cdi-api:jar:2.0.SP1</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//javax/enterprise/cdi-api/2.0.SP1/cdi-api-2.0.SP1.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
-<td>javax.inject:javax.inject:jar:1</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//javax/inject/javax.inject/1/javax.inject-1.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>javax.interceptor:javax.interceptor-api:jar:1.2</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//javax/interceptor/javax.interceptor-api/1.2/javax.interceptor-api-1.2.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
-<td>javax.transaction:javax.transaction-api:jar:1.2</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//javax/transaction/javax.transaction-api/1.2/javax.transaction-api-1.2.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>javax.validation:validation-api:jar:2.0.1.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//javax/validation/validation-api/2.0.1.Final/validation-api-2.0.1.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
-<td>junit:junit:jar:4.12</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//junit/junit/4.12/junit-4.12.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>org.glassfish:javax.el:jar:3.0.1-b10</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/glassfish/javax.el/3.0.1-b10/javax.el-3.0.1-b10.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
-<td>org.hamcrest:hamcrest-core:jar:1.3</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>org.hibernate.validator:hibernate-validator:jar:6.0.13.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/hibernate/validator/hibernate-validator/6.0.13.Final/hibernate-validator-6.0.13.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
-<td>org.hibernate.validator:hibernate-validator-cdi:jar:6.0.13.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/hibernate/validator/hibernate-validator-cdi/6.0.13.Final/hibernate-validator-cdi-6.0.13.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>org.jboss:jandex:jar:2.0.5.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/jandex/2.0.5.Final/jandex-2.0.5.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
-<td>org.jboss:jboss-transaction-spi:jar:7.6.0.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/jboss-transaction-spi/7.6.0.Final/jboss-transaction-spi-7.6.0.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>org.jboss.classfilewriter:jboss-classfilewriter:jar:1.2.3.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/classfilewriter/jboss-classfilewriter/1.2.3.Final/jboss-classfilewriter-1.2.3.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
-<td>org.jboss.logging:jboss-logging:jar:3.3.2.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/logging/jboss-logging/3.3.2.Final/jboss-logging-3.3.2.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>org.jboss.narayana.jta:narayana-jta:jar:5.9.1.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/narayana/jta/narayana-jta/5.9.1.Final/narayana-jta-5.9.1.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
-<td>org.jboss.spec.javax.annotation:jboss-annotations-api_1.3_spec:jar:1.0.0.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/spec/javax/annotation/jboss-annotations-api_1.3_spec/1.0.0.Final/jboss-annotations-api_1.3_spec-1.0.0.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>org.jboss.spec.javax.el:jboss-el-api_3.0_spec:jar:1.0.7.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/spec/javax/el/jboss-el-api_3.0_spec/1.0.7.Final/jboss-el-api_3.0_spec-1.0.7.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
-<td>org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec:jar:1.0.0.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/spec/javax/interceptor/jboss-interceptors-api_1.2_spec/1.0.0.Final/jboss-interceptors-api_1.2_spec-1.0.0.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:jar:1.0.0.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/spec/javax/transaction/jboss-transaction-api_1.2_spec/1.0.0.Final/jboss-transaction-api_1.2_spec-1.0.0.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
-<td>org.jboss.weld:weld-api:jar:3.0.SP4</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/weld/weld-api/3.0.SP4/weld-api-3.0.SP4.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>org.jboss.weld:weld-core-impl:jar:3.0.5.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/weld/weld-core-impl/3.0.5.Final/weld-core-impl-3.0.5.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
-<td>org.jboss.weld:weld-spi:jar:3.0.SP4</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/weld/weld-spi/3.0.SP4/weld-spi-3.0.SP4.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>org.jboss.weld.environment:weld-environment-common:jar:3.0.5.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/weld/environment/weld-environment-common/3.0.5.Final/weld-environment-common-3.0.5.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
-<td>org.jboss.weld.module:weld-jta:jar:3.0.5.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/weld/module/weld-jta/3.0.5.Final/weld-jta-3.0.5.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>org.jboss.weld.probe:weld-probe-core:jar:3.0.5.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/weld/probe/weld-probe-core/3.0.5.Final/weld-probe-core-3.0.5.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
-<td>org.jboss.weld.se:weld-se-core:jar:3.0.5.Final</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/jboss/weld/se/weld-se-core/3.0.5.Final/weld-se-core-3.0.5.Final.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>org.microbean:microbean-abstract-environment:pom:0.5.0</td>
-<td>-</td></tr>
-<tr class="b">
-<td>org.microbean:microbean-base-specification:pom:0.4.3</td>
-<td>-</td></tr>
-<tr class="a">
-<td>org.microbean:microbean-configuration:jar:0.4.3</td>
-<td>-</td></tr>
-<tr class="b">
-<td>org.microbean:microbean-configuration-api:jar:0.4.3</td>
-<td>-</td></tr>
-<tr class="a">
-<td>org.microbean:microbean-configuration-cdi:jar:0.4.3</td>
-<td>-</td></tr>
-<tr class="b">
-<td>org.microbean:microbean-main:jar:6</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/microbean/microbean-main/6/microbean-main-6.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>org.microbean:microbean-weld-se-environment:pom:0.5.1</td>
-<td>-</td></tr>
-<tr class="b">
-<td>org.slf4j:slf4j-api:jar:1.7.25</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
-<td>org.slf4j:slf4j-jdk14:jar:1.7.25</td>
-<td><a class="externalLink" href="http://localhost:8081/repository/maven-public//org/slf4j/slf4j-jdk14/1.7.25/slf4j-jdk14-1.7.25.jar"><img alt="Found at http://localhost:8081/repository/maven-public/" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
-<th>Total</th>
-<th>nexus</th></tr>
-<tr class="a">
-<td>38 (compile: 6, test: 24, provided: 8)</td>
-<td>32</td></tr></table></div>
+<td>provided: 7</td></tr></table></div>
         </div>
       </div>
     </div>
