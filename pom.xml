@@ -48,7 +48,7 @@
       <dependency>
         <groupId>org.microbean</groupId>
         <artifactId>microbean-base-specification</artifactId>
-        <version>0.4.4</version>
+        <version>0.4.5</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -56,7 +56,7 @@
       <dependency>
         <groupId>org.microbean</groupId>
         <artifactId>microbean-weld-se-environment</artifactId>
-        <version>0.5.2</version>
+        <version>0.5.3</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
