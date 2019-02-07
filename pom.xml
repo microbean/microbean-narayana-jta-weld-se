@@ -33,10 +33,10 @@
   <dependencyManagement>
     <dependencies>
 
-      
+
       <!-- Imports. -->
 
-      
+
       <dependency>
         <groupId>org.jboss.weld</groupId>
         <artifactId>weld-core-bom</artifactId>
@@ -44,7 +44,7 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      
+
       <dependency>
         <groupId>org.microbean</groupId>
         <artifactId>microbean-base-specification</artifactId>
@@ -85,16 +85,16 @@
         </exclusions>
       </dependency>
 
-      
+
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
 
-    
+
     <!-- Test-scoped dependencies. -->
 
-    
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -115,7 +115,7 @@
       <type>jar</type>
       <scope>test</scope>
     </dependency>
-    
+
 
     <!-- Provided-scoped dependencies. -->
 
@@ -126,7 +126,7 @@
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.microbean</groupId>
       <artifactId>microbean-base-specification</artifactId>
@@ -134,7 +134,7 @@
       <scope>provided</scope>
     </dependency>
 
-    
+
     <!-- Compile-scoped dependencies. -->
 
 
@@ -144,16 +144,16 @@
       <type>jar</type>
       <scope>compile</scope>
     </dependency>
-        
+
     <dependency>
       <groupId>org.jboss.narayana.jta</groupId>
       <artifactId>jta</artifactId>
       <type>jar</type>
       <scope>compile</scope>
     </dependency>
-    
+
   </dependencies>
-  
+
   <build>
 
     <pluginManagement>
@@ -163,7 +163,7 @@
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.1.1</version>
         </plugin>
-        
+
         <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
           <configuration>
@@ -177,16 +177,16 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
-        
+
         <plugin>
           <groupId>org.owasp</groupId>
           <artifactId>dependency-check-maven</artifactId>
-          <version>4.0.0</version>                    
+          <version>4.0.2</version>
         </plugin>
-        
+
       </plugins>
     </pluginManagement>
-    
+
     <plugins>
 
       <plugin>
@@ -204,7 +204,7 @@
           </execution>
         </executions>
       </plugin>
-      
+
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
@@ -213,7 +213,7 @@
           </systemPropertyVariables>
         </configuration>
       </plugin>
-      
+
       <plugin>
         <groupId>com.github.github</groupId>
         <artifactId>site-maven-plugin</artifactId>
@@ -223,10 +223,10 @@
   </build>
 
   <properties>
-    
+
     <!-- dependency-check-plugin properties; see -->
     <suppressionFile>${basedir}/src/dependency-check/suppressions.xml</suppressionFile>
-    
+
     <!-- maven-javadoc-plugin properties; see https://maven.apache.org/plugins/maven-javadoc-plugin/javadoc-mojo.html -->
     <links>https://docs.jboss.org/weld/javadoc/3.0/weld-spi/,https://static.javadoc.io/javax.transaction/javax.transaction-api/1.2/,https://static.javadoc.io/org.jboss.narayana.jta/narayana-jta/5.9.0.Final/</links>
     <stylesheetfile>css/stylesheet.css</stylesheetfile>
@@ -237,6 +237,14 @@
     <plugins>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>javadoc-no-fork</report>
+              <report>test-javadoc-no-fork</report>
+            </reports>
+          </reportSet>
+        </reportSets>
       </plugin>
       <plugin>
         <groupId>org.owasp</groupId>

@@ -51,7 +51,6 @@ import org.jboss.weld.transaction.spi.TransactionServices;
  */
 public class NarayanaTransactionServices implements TransactionServices {
 
-  private UserTransaction userTransaction;
 
   /*
    * Constructors.
@@ -91,17 +90,23 @@ public class NarayanaTransactionServices implements TransactionServices {
    */
   @Override
   public final UserTransaction getUserTransaction() {
+    // We don't want to use, e.g.,
+    // CDI.current().select(UserTransaction.class).get() here because
+    // CDI containers like Weld are obliged per the specification to
+    // automatically provide a bean for UserTransaction.  Weld uses
+    // the return value of this method to create such a bean and we
+    // obviously need to avoid the infinite loop.
     return com.arjuna.ats.jta.UserTransaction.userTransaction();
   }
 
   /**
-   * Returns {@code true} if the current {@link UserTransaction}
-   * {@linkplain UserTransaction#getStatus() has a status} indicating
-   * that it is active.
+   * Returns {@code true} if the current {@link Transaction}
+   * {@linkplain Transaction#getStatus() has a status} indicating that
+   * it is active.
    *
    * <p>This method returns {@code true} if the current {@link
-   * UserTransaction} {@linkplain UserTransaction#getStatus() has a
-   * status} equal to one of the following values:</p>
+   * Transaction} {@linkplain Transaction#getStatus() has a status}
+   * equal to one of the following values:</p>
    *
    * <ul>
    *
@@ -119,32 +124,27 @@ public class NarayanaTransactionServices implements TransactionServices {
    *
    * </ul>
    *
-   * @return {@code true} if the current {@link UserTransaction}
-   * {@linkplain UserTransaction#getStatus() has a status} indicating
-   * that it is active; {@code false} otherwise
+   * @return {@code true} if the current {@link Transaction}
+   * {@linkplain Transaction#getStatus() has a status} indicating that
+   * it is active; {@code false} otherwise
    *
    * @exception RuntimeException if an invocation of the {@link
-   * UserTransaction#getStatus()} method resulted in a {@link
+   * Transaction#getStatus()} method resulted in a {@link
    * SystemException}
    *
    * @see Status
    */
   @Override
   public final boolean isTransactionActive() {
-    final UserTransaction userTransaction;
-    synchronized (this) {
-      if (this.userTransaction == null) {
-        this.userTransaction = CDI.current().select(UserTransaction.class).get();
-      }
-      userTransaction = this.userTransaction;
-    }
     final boolean returnValue;
-    if (userTransaction == null) {
-      returnValue = false;
-    } else {
+    final Instance<Transaction> transactions = CDI.current().select(Transaction.class);
+    assert transactions != null;
+    if (!transactions.isUnsatisfied()) {
+      final Transaction transaction = transactions.get();
+      assert transaction != null;
       boolean temp = false;
       try {
-        final int status = userTransaction.getStatus();
+        final int status = transaction.getStatus();
         temp =
           status == Status.STATUS_ACTIVE ||
           status == Status.STATUS_COMMITTING ||
@@ -157,6 +157,8 @@ public class NarayanaTransactionServices implements TransactionServices {
       } finally {
         returnValue = temp;
       }
+    } else {
+      returnValue = false;
     }
     return returnValue;
   }
@@ -213,7 +215,7 @@ public class NarayanaTransactionServices implements TransactionServices {
    */
   @Override
   public synchronized final void cleanup() {
-    this.userTransaction = null;
+
   }
 
   
