@@ -4,7 +4,7 @@
 
   <groupId>org.microbean</groupId>
   <artifactId>microbean-narayana-jta-weld-se</artifactId>
-  <version>0.1.5-SNAPSHOT</version>
+  <version>0.2.0-SNAPSHOT</version>
 
   <parent>
     <groupId>org.microbean</groupId>
@@ -77,14 +77,14 @@
         <artifactId>jta</artifactId>
         <version>5.9.2.Final</version>
         <type>jar</type>
-        <exclusions>
-          <exclusion>
-            <groupId>sun.jdk</groupId>
-            <artifactId>jconsole</artifactId>
-          </exclusion>
-        </exclusions>
       </dependency>
 
+      <dependency>
+        <groupId>org.microbean</groupId>
+        <artifactId>microbean-narayana-jta-cdi</artifactId>
+        <version>0.2.0</version>
+        <type>jar</type>
+      </dependency>
 
     </dependencies>
   </dependencyManagement>
@@ -114,6 +114,17 @@
       <artifactId>weld-jta</artifactId>
       <type>jar</type>
       <scope>test</scope>
+    </dependency>
+
+
+    <!-- Runtime-scoped dependencies. -->
+
+
+    <dependency>
+      <groupId>org.microbean</groupId>
+      <artifactId>microbean-narayana-jta-cdi</artifactId>
+      <type>jar</type>
+      <scope>runtime</scope>
     </dependency>
 
 

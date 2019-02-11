@@ -28,6 +28,8 @@ import javax.transaction.Transaction;
 import javax.transaction.TransactionManager;
 import javax.transaction.UserTransaction;
 
+import com.arjuna.ats.jta.common.JTAEnvironmentBean;
+
 import org.jboss.weld.transaction.spi.TransactionServices;
 
 /**
@@ -96,7 +98,16 @@ public class NarayanaTransactionServices implements TransactionServices {
     // automatically provide a bean for UserTransaction.  Weld uses
     // the return value of this method to create such a bean and we
     // obviously need to avoid the infinite loop.
-    return com.arjuna.ats.jta.UserTransaction.userTransaction();
+    final Instance<JTAEnvironmentBean> jtaEnvironmentBeans = CDI.current().select(JTAEnvironmentBean.class);
+    assert jtaEnvironmentBeans != null;
+    final JTAEnvironmentBean jtaEnvironmentBean;
+    if (jtaEnvironmentBeans.isUnsatisfied()) {
+      jtaEnvironmentBean = com.arjuna.ats.jta.common.jtaPropertyManager.getJTAEnvironmentBean();
+    } else {
+      jtaEnvironmentBean = jtaEnvironmentBeans.get();
+    }
+    assert jtaEnvironmentBean != null;
+    return jtaEnvironmentBean.getUserTransaction();
   }
 
   /**
