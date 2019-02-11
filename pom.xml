@@ -77,6 +77,12 @@
         <artifactId>jta</artifactId>
         <version>5.9.2.Final</version>
         <type>jar</type>
+        <exclusions>
+          <exclusion>
+            <groupId>sun.jdk</groupId>
+            <artifactId>jconsole</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
 
       <dependency>
@@ -84,12 +90,6 @@
         <artifactId>microbean-narayana-jta-cdi</artifactId>
         <version>0.2.0</version>
         <type>jar</type>
-        <exclusions>
-          <exclusion>
-            <groupId>sun.jdk</groupId>
-            <artifactId>jconsole</artifactId>
-          </exclusion>
-        </exclusions>
       </dependency>
 
     </dependencies>
